@@ -22,13 +22,12 @@ class App extends Component {
           .then(res => res.json())
           .then(res => {
             this.setState({ todos: [...this.state.todos, res] });
-            console.log(this.state.todos);
           })
           .catch(err => console.log(err));
       },
 
-      updateTodo: newDescription => {
-        fetch(`http://localhost:9000/api/todos/`, {
+      updateTodo: (todoId, newDescription) => {
+        fetch(`http://localhost:9000/api/todos/${todoId}`, {
           headers: {
             'Content-Type': 'application/json'
           },

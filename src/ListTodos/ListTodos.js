@@ -10,13 +10,6 @@ class ListTodos extends Component {
     this.context.deleteTodo(todoId);
   };
 
-  updateTodo = e => {
-    e.preventDefault();
-    const newTodo = { description: e.target.newDescription.value };
-    this.context.updateUser(newTodo);
-    e.target.reset();
-  };
-
   render() {
     return (
       <Fragment>
@@ -35,7 +28,7 @@ class ListTodos extends Component {
                 <tr key={todo.id}>
                   <td>{todo.description}</td>
                   <td>
-                    <EditTodo />
+                    <EditTodo todoId={todo.id} />
                   </td>
                   <td>
                     <button

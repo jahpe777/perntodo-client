@@ -4,6 +4,23 @@ import TodoContext from '../Context/TodoContext';
 class EditTodo extends Component {
   static contextType = TodoContext;
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      newTodo: ''
+    };
+  }
+  updateTodoValue = e => {
+    e.preventDefault();
+    const newTodo = { description: e.target.value };
+    this.updateTodoButton(newTodo);
+  };
+
+  updateTodoButton = (todoId, newTodo) => {
+    this.context.updateTodo(todoId, newTodo);
+    console.log(todoId, newTodo);
+  };
+
   render() {
     return (
       <Fragment>
@@ -25,12 +42,11 @@ class EditTodo extends Component {
                   &times;
                 </button>
               </div>
-
               <div className="modal-body">
                 <input
                   type="text"
                   className="form-control"
-                  name="newDescription"
+                  onChange={e => this.updateTodoValue(e)}
                 />
               </div>
 
@@ -39,7 +55,8 @@ class EditTodo extends Component {
                   type="button"
                   className="btn btn-warning"
                   data-dismiss="modal"
-                  onSubmit={e => this.updateTodo(e)}
+                  id={this.props.todoId}
+                  onClick={e => this.updateTodoButton(e.target.id)}
                 >
                   Edit
                 </button>
