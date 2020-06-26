@@ -1,14 +1,27 @@
-import React, { Component, Fragment, useEffect } from 'react';
+import React, { Component, Fragment } from 'react';
+import EditTodo from '../EditTodo/EditTodo';
 import TodoContext from '../Context/TodoContext';
 
 class ListTodos extends Component {
   static contextType = TodoContext;
 
+  deleteTodo = (e, todoId) => {
+    e.preventDefault();
+    this.context.deleteTodo(todoId);
+  };
+
+  updateTodo = e => {
+    e.preventDefault();
+    const newTodo = { description: e.target.newDescription.value };
+    this.context.updateUser(newTodo);
+    e.target.reset();
+  };
+
   render() {
     return (
       <Fragment>
         {' '}
-        <table class="table mt-5 text-center">
+        <table className="table mt-5 text-center">
           <thead>
             <tr>
               <th>Description</th>
@@ -21,25 +34,22 @@ class ListTodos extends Component {
               return (
                 <tr key={todo.id}>
                   <td>{todo.description}</td>
-                  <button className="btn btn-warning" type="submit" name="edit">
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    type="submit"
-                    name="delete"
-                  >
-                    Delete
-                  </button>
-                  <br />
+                  <td>
+                    <EditTodo />
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-danger"
+                      type="submit"
+                      name="delete"
+                      onClick={e => this.deleteTodo(e, todo.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               );
             })}
-            {/* <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john@example.com</td>
-          </tr> */}
           </tbody>
         </table>
       </Fragment>

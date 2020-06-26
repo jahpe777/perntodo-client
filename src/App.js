@@ -3,7 +3,6 @@ import InputTodo from './InputTodo/InputTodo';
 
 import TodoContext from './Context/TodoContext';
 
-import EditTodo from './EditTodo/EditTodo';
 import ListTodos from './ListTodos/ListTodos';
 
 class App extends Component {
@@ -20,10 +19,48 @@ class App extends Component {
           method: 'POST',
           body: JSON.stringify({ description })
         })
+          .then(res => res.json())
           .then(res => {
             this.setState({ todos: [...this.state.todos, res] });
+            console.log(this.state.todos);
           })
           .catch(err => console.log(err));
+      },
+
+      updateTodo: newDescription => {
+        fetch(`http://localhost:9000/api/todos/`, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'PATCH',
+          body: JSON.stringify(newDescription)
+        })
+          .then(res => res)
+          .then(() => {
+            this.setState({
+              todos: Object.assign(this.state.todos, newDescription)
+            });
+          })
+          .catch(err => console.log(err));
+      },
+
+      deleteTodo: todoId => {
+        fetch(`http://localhost:9000/api/todos/${todoId}`, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'DELETE',
+          body: JSON.stringify(todoId)
+        })
+          .then(res => {
+            if (!res.ok) return res.json().then(e => Promise.reject(e));
+            return true;
+          })
+          .then(deletedTodo => {
+            this.setState({
+              todos: this.state.todos.filter(todo => todo.id !== todoId)
+            });
+          });
       }
     };
   }
@@ -55,7 +92,6 @@ class App extends Component {
         <Fragment>
           <div className="container">
             <InputTodo />
-            <EditTodo />
             <ListTodos />
           </div>
         </Fragment>
