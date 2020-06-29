@@ -22,6 +22,7 @@ class App extends Component {
           .then(res => res.json())
           .then(res => {
             this.setState({ todos: [...this.state.todos, res] });
+            console.log('5', this.state.todos);
           })
           .catch(err => console.log(err));
       },
@@ -36,10 +37,11 @@ class App extends Component {
         })
           .then(res => res)
           .then(() => {
-            console.log('3', todoItem);
+            console.log('3', todoId, todoItem, this.state.todos);
             this.setState({
               todos: Object.assign(this.state.todos, todoItem)
             });
+            console.log('4', todoId, todoItem, this.state.todos);
           })
           .catch(err => console.log(err));
       },

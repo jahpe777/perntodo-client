@@ -17,8 +17,8 @@ class EditTodo extends Component {
   };
 
   updateTodoButton = todoId => {
-    this.context.updateTodo(todoId, this.state.newTodo);
-    console.log('2', todoId, this.state.newTodo);
+    this.context.updateTodo(todoId, { description: this.state.newTodo });
+    console.log('2', todoId, { description: this.state.newTodo });
   };
 
   render() {
