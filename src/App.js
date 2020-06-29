@@ -26,18 +26,19 @@ class App extends Component {
           .catch(err => console.log(err));
       },
 
-      updateTodo: (todoId, newDescription) => {
+      updateTodo: (todoId, todoItem) => {
         fetch(`http://localhost:9000/api/todos/${todoId}`, {
           headers: {
             'Content-Type': 'application/json'
           },
           method: 'PATCH',
-          body: JSON.stringify(newDescription)
+          body: JSON.stringify(todoItem)
         })
           .then(res => res)
           .then(() => {
+            console.log('3', todoItem);
             this.setState({
-              todos: Object.assign(this.state.todos, newDescription)
+              todos: Object.assign(this.state.todos, todoItem)
             });
           })
           .catch(err => console.log(err));

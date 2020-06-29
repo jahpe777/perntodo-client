@@ -10,15 +10,17 @@ class EditTodo extends Component {
       newTodo: ''
     };
   }
+
   updateTodoValue = e => {
     e.preventDefault();
-    const newTodo = { description: e.target.value };
-    this.updateTodoButton(newTodo);
+    const newwwTodo = { description: e.target.value };
+    this.setState({ newTodo: newwwTodo });
+    console.log('1', newwwTodo);
   };
 
-  updateTodoButton = (todoId, newTodo) => {
-    this.context.updateTodo(todoId, newTodo);
-    console.log(todoId, newTodo);
+  updateTodoButton = todoId => {
+    this.context.updateTodo(todoId, this.state.newTodo);
+    console.log('2', todoId, this.state.newTodo);
   };
 
   render() {
@@ -28,12 +30,12 @@ class EditTodo extends Component {
           type="button"
           className="btn btn-warning"
           data-toggle="modal"
-          data-target="#myModal"
+          data-target={`#id${this.props.todoId}`}
         >
           Edit
         </button>
 
-        <div className="modal" id="myModal">
+        <div className="modal" id={`id${this.props.todoId}`}>
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -46,6 +48,7 @@ class EditTodo extends Component {
                 <input
                   type="text"
                   className="form-control"
+                  value={this.props.todoDescription}
                   onChange={e => this.updateTodoValue(e)}
                 />
               </div>

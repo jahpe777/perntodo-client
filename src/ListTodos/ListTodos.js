@@ -28,7 +28,10 @@ class ListTodos extends Component {
                 <tr key={todo.id}>
                   <td>{todo.description}</td>
                   <td>
-                    <EditTodo todoId={todo.id} />
+                    <EditTodo
+                      todoId={todo.id}
+                      todoDescription={todo.description}
+                    />
                   </td>
                   <td>
                     <button
