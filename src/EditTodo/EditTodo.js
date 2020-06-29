@@ -7,15 +7,13 @@ class EditTodo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newTodo: ''
+      newTodo: this.props.todoDescription
     };
   }
 
   updateTodoValue = e => {
     e.preventDefault();
-    const newwwTodo = { description: e.target.value };
-    this.setState({ newTodo: newwwTodo });
-    console.log('1', newwwTodo);
+    this.setState({ newTodo: e.target.value });
   };
 
   updateTodoButton = todoId => {
@@ -48,7 +46,7 @@ class EditTodo extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  value={this.props.todoDescription}
+                  value={this.state.newTodo}
                   onChange={e => this.updateTodoValue(e)}
                 />
               </div>
