@@ -16,8 +16,12 @@ class EditTodo extends Component {
     this.setState({ newTodo: e.target.value });
   };
 
-  updateTodoButton = todoId => {
-    this.context.updateTodo(todoId, { description: this.state.newTodo });
+  updateTodoButton = (todoId, todos) => {
+    const oldTodo = todos.find(todo => todo.id === parseFloat(todoId));
+    this.context.updateTodo(todoId, {
+      ...oldTodo,
+      description: this.state.newTodo
+    });
     console.log('2', todoId, { description: this.state.newTodo });
   };
 
@@ -57,7 +61,9 @@ class EditTodo extends Component {
                   className="btn btn-warning"
                   data-dismiss="modal"
                   id={this.props.todoId}
-                  onClick={e => this.updateTodoButton(e.target.id)}
+                  onClick={e =>
+                    this.updateTodoButton(e.target.id, this.context.todos)
+                  }
                 >
                   Edit
                 </button>

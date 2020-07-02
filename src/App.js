@@ -22,7 +22,6 @@ class App extends Component {
           .then(res => res.json())
           .then(res => {
             this.setState({ todos: [...this.state.todos, res] });
-            console.log('5', this.state.todos);
           })
           .catch(err => console.log(err));
       },
@@ -37,11 +36,17 @@ class App extends Component {
         })
           .then(res => res)
           .then(() => {
-            console.log('3', todoId, todoItem, this.state.todos);
-            this.setState({
-              todos: Object.assign(this.state.todos, todoItem)
+            let newTodos = this.state.todos.map(todo => {
+              console.log(todo, todoId);
+              if (todo.id === parseInt(todoId, 10)) {
+                return todoItem;
+              } else {
+                return todo;
+              }
             });
-            console.log('4', todoId, todoItem, this.state.todos);
+            this.setState({
+              todos: newTodos
+            });
           })
           .catch(err => console.log(err));
       },
@@ -89,6 +94,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('5', this.state.todos);
     return (
       <TodoContext.Provider value={this.state}>
         <Fragment>
